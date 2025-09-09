@@ -15,12 +15,6 @@
       body {
         font-family: "Inter", sans-serif;
       }
-      .form-section {
-        transition: all 0.3s ease-in-out;
-      }
-      #result-container {
-        transition: opacity 0.5s ease-in-out;
-      }
       @keyframes fadeIn {
         from {
           opacity: 0;
@@ -34,24 +28,20 @@
       .fade-in {
         animation: fadeIn 0.5s ease-in-out forwards;
       }
-      label {
-        margin-bottom: 0.25rem;
-        display: block;
-      }
     </style>
   </head>
   <body
-    class="bg-slate-50 text-slate-800 flex items-center justify-center min-h-screen p-4 sm:p-6 lg:p-8"
+    class="bg-gray-900 text-gray-300 flex items-center justify-center min-h-screen p-4 sm:p-6 lg:p-8"
   >
     <main
-      class="w-full max-w-3xl bg-white rounded-2xl shadow-xl p-6 sm:p-8 lg:p-10 space-y-8"
+      class="w-full max-w-3xl bg-gray-800 rounded-2xl shadow-xl p-6 sm:p-8 lg:p-10 space-y-8 border border-gray-700"
     >
       <!-- Header -->
       <div class="text-center">
-        <h1 class="text-3xl sm:text-4xl font-bold text-slate-900">
+        <h1 class="text-3xl sm:text-4xl font-bold text-white">
           Gerador de Perfil Pessoal Detalhado
         </h1>
-        <p class="mt-2 text-slate-600">
+        <p class="mt-2 text-gray-400">
           Responda ao roteiro abaixo para criar um perfil completo. Isso me
           ajudará a personalizar as respostas para você.
         </p>
@@ -60,50 +50,54 @@
       <!-- Form Sections -->
       <div id="profile-form" class="space-y-10">
         <!-- Section 1: Dados Pessoais e Gerais -->
-        <div class="form-section border-l-4 border-indigo-500 pl-4">
-          <h2 class="text-xl font-semibold text-slate-800">
+        <div
+          class="form-section bg-gray-900/50 p-6 rounded-lg border border-gray-700"
+        >
+          <h2 class="text-xl font-semibold text-white">
             🧑‍💻 Dados Pessoais e Gerais
           </h2>
           <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
             <div>
-              <label for="nome" class="text-sm font-medium text-slate-700"
+              <label for="nome" class="text-sm font-medium text-gray-400 mb-1"
                 >Nome (ou apelido)</label
               >
               <input
                 type="text"
                 id="nome"
-                class="w-full p-3 bg-slate-100 rounded-lg border border-slate-200 focus:ring-2 focus:ring-indigo-500 outline-none"
+                class="w-full p-3 bg-gray-700 rounded-lg border border-gray-600 text-gray-200 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none"
               />
             </div>
             <div>
-              <label for="idade" class="text-sm font-medium text-slate-700"
+              <label for="idade" class="text-sm font-medium text-gray-400 mb-1"
                 >Idade ou faixa etária</label
               >
               <input
                 type="text"
                 id="idade"
-                class="w-full p-3 bg-slate-100 rounded-lg border border-slate-200 focus:ring-2 focus:ring-indigo-500 outline-none"
-                placeholder="Ex: 30-40 anos"
+                class="w-full p-3 bg-gray-700 rounded-lg border border-gray-600 text-gray-200 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none"
+                placeholder="Ex: 40-50 anos"
               />
             </div>
             <div>
-              <label for="pais" class="text-sm font-medium text-slate-700"
+              <label for="pais" class="text-sm font-medium text-gray-400 mb-1"
                 >País e região onde vive</label
               >
               <input
                 type="text"
                 id="pais"
-                class="w-full p-3 bg-slate-100 rounded-lg border border-slate-200 focus:ring-2 focus:ring-indigo-500 outline-none"
+                class="w-full p-3 bg-gray-700 rounded-lg border border-gray-600 text-gray-200 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none"
               />
             </div>
             <div>
-              <label for="idiomas" class="text-sm font-medium text-slate-700"
+              <label
+                for="idiomas"
+                class="text-sm font-medium text-gray-400 mb-1"
                 >Idioma(s) de preferência</label
               >
               <input
                 type="text"
                 id="idiomas"
-                class="w-full p-3 bg-slate-100 rounded-lg border border-slate-200 focus:ring-2 focus:ring-indigo-500 outline-none"
+                class="w-full p-3 bg-gray-700 rounded-lg border border-gray-600 text-gray-200 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none"
                 placeholder="Ex: Português, Inglês"
               />
             </div>
@@ -111,249 +105,281 @@
         </div>
 
         <!-- Section 2: Objetivos com a IA -->
-        <div class="form-section border-l-4 border-sky-500 pl-4">
-          <h2 class="text-xl font-semibold text-slate-800">
+        <div
+          class="form-section bg-gray-900/50 p-6 rounded-lg border border-gray-700"
+        >
+          <h2 class="text-xl font-semibold text-white">
             🎯 Objetivos com a IA
           </h2>
           <div class="space-y-4 mt-4">
             <div>
-              <label for="uso_ia" class="text-sm font-medium text-slate-700"
+              <label for="uso_ia" class="text-sm font-medium text-gray-400 mb-1"
                 >Para que pretende usar a IA?</label
               >
               <textarea
                 id="uso_ia"
                 rows="3"
-                class="w-full p-3 bg-slate-100 rounded-lg border border-slate-200 focus:ring-2 focus:ring-sky-500 outline-none"
+                class="w-full p-3 bg-gray-700 rounded-lg border border-gray-600 text-gray-200 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none"
                 placeholder="Ex: estudo, trabalho, apoio em projetos, aprendizagem, lazer, saúde, escrita, programação, etc."
               ></textarea>
             </div>
             <div>
               <label
                 for="interesses_ia"
-                class="text-sm font-medium text-slate-700"
+                class="text-sm font-medium text-gray-400 mb-1"
                 >Principais áreas de interesse</label
               >
               <textarea
                 id="interesses_ia"
                 rows="2"
-                class="w-full p-3 bg-slate-100 rounded-lg border border-slate-200 focus:ring-2 focus:ring-sky-500 outline-none"
+                class="w-full p-3 bg-gray-700 rounded-lg border border-gray-600 text-gray-200 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none"
               ></textarea>
             </div>
             <div>
-              <label for="limites_ia" class="text-sm font-medium text-slate-700"
+              <label
+                for="limites_ia"
+                class="text-sm font-medium text-gray-400 mb-1"
                 >O que gostaria que a IA não fizesse (limites ou temas a
                 evitar)</label
               >
               <textarea
                 id="limites_ia"
                 rows="2"
-                class="w-full p-3 bg-slate-100 rounded-lg border border-slate-200 focus:ring-2 focus:ring-sky-500 outline-none"
+                class="w-full p-3 bg-gray-700 rounded-lg border border-gray-600 text-gray-200 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none"
               ></textarea>
             </div>
           </div>
         </div>
 
         <!-- Section 3: Formação e Conhecimentos -->
-        <div class="form-section border-l-4 border-emerald-500 pl-4">
-          <h2 class="text-xl font-semibold text-slate-800">
+        <div
+          class="form-section bg-gray-900/50 p-6 rounded-lg border border-gray-700"
+        >
+          <h2 class="text-xl font-semibold text-white">
             📚 Formação e Conhecimentos
           </h2>
           <div class="space-y-4 mt-4">
             <div>
-              <label for="formacao" class="text-sm font-medium text-slate-700"
+              <label
+                for="formacao"
+                class="text-sm font-medium text-gray-400 mb-1"
                 >Formação académica ou técnica</label
               >
               <input
                 type="text"
                 id="formacao"
-                class="w-full p-3 bg-slate-100 rounded-lg border border-slate-200 focus:ring-2 focus:ring-emerald-500 outline-none"
+                class="w-full p-3 bg-gray-700 rounded-lg border border-gray-600 text-gray-200 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none"
               />
             </div>
             <div>
-              <label for="exp_tech" class="text-sm font-medium text-slate-700"
+              <label
+                for="exp_tech"
+                class="text-sm font-medium text-gray-400 mb-1"
                 >Nível de experiência em tecnologia</label
               >
               <input
                 type="text"
                 id="exp_tech"
-                class="w-full p-3 bg-slate-100 rounded-lg border border-slate-200 focus:ring-2 focus:ring-emerald-500 outline-none"
+                class="w-full p-3 bg-gray-700 rounded-lg border border-gray-600 text-gray-200 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none"
                 placeholder="Ex: Básico, utilizador diário, programador..."
               />
             </div>
             <div>
-              <label for="aprender" class="text-sm font-medium text-slate-700"
+              <label
+                for="aprender"
+                class="text-sm font-medium text-gray-400 mb-1"
                 >Áreas em que gostaria de aprender mais</label
               >
               <textarea
                 id="aprender"
                 rows="2"
-                class="w-full p-3 bg-slate-100 rounded-lg border border-slate-200 focus:ring-2 focus:ring-emerald-500 outline-none"
+                class="w-full p-3 bg-gray-700 rounded-lg border border-gray-600 text-gray-200 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none"
               ></textarea>
             </div>
           </div>
         </div>
 
         <!-- Section 4: Profissão / Projetos -->
-        <div class="form-section border-l-4 border-amber-500 pl-4">
-          <h2 class="text-xl font-semibold text-slate-800">
+        <div
+          class="form-section bg-gray-900/50 p-6 rounded-lg border border-gray-700"
+        >
+          <h2 class="text-xl font-semibold text-white">
             💼 Profissão / Projetos
           </h2>
           <div class="space-y-4 mt-4">
             <div>
-              <label for="profissao" class="text-sm font-medium text-slate-700"
+              <label
+                for="profissao"
+                class="text-sm font-medium text-gray-400 mb-1"
                 >Profissão atual ou atividade principal</label
               >
               <input
                 type="text"
                 id="profissao"
-                class="w-full p-3 bg-slate-100 rounded-lg border border-slate-200 focus:ring-2 focus:ring-amber-500 outline-none"
+                class="w-full p-3 bg-gray-700 rounded-lg border border-gray-600 text-gray-200 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none"
               />
             </div>
             <div>
-              <label for="projetos" class="text-sm font-medium text-slate-700"
+              <label
+                for="projetos"
+                class="text-sm font-medium text-gray-400 mb-1"
                 >Projetos pessoais ou profissionais em andamento</label
               >
               <textarea
                 id="projetos"
                 rows="2"
-                class="w-full p-3 bg-slate-100 rounded-lg border border-slate-200 focus:ring-2 focus:ring-amber-500 outline-none"
+                class="w-full p-3 bg-gray-700 rounded-lg border border-gray-600 text-gray-200 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none"
               ></textarea>
             </div>
             <div>
               <label
                 for="ferramentas"
-                class="text-sm font-medium text-slate-700"
+                class="text-sm font-medium text-gray-400 mb-1"
                 >Ferramentas/tecnologias que usa regularmente</label
               >
               <textarea
                 id="ferramentas"
                 rows="2"
-                class="w-full p-3 bg-slate-100 rounded-lg border border-slate-200 focus:ring-2 focus:ring-amber-500 outline-none"
+                class="w-full p-3 bg-gray-700 rounded-lg border border-gray-600 text-gray-200 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none"
               ></textarea>
             </div>
           </div>
         </div>
 
         <!-- Section 5: Interesses Pessoais -->
-        <div class="form-section border-l-4 border-rose-500 pl-4">
-          <h2 class="text-xl font-semibold text-slate-800">
+        <div
+          class="form-section bg-gray-900/50 p-6 rounded-lg border border-gray-700"
+        >
+          <h2 class="text-xl font-semibold text-white">
             🎨 Interesses Pessoais
           </h2>
           <div class="space-y-4 mt-4">
             <div>
-              <label for="hobbies" class="text-sm font-medium text-slate-700"
+              <label
+                for="hobbies"
+                class="text-sm font-medium text-gray-400 mb-1"
                 >Hobbies e passatempos</label
               >
               <input
                 type="text"
                 id="hobbies"
-                class="w-full p-3 bg-slate-100 rounded-lg border border-slate-200 focus:ring-2 focus:ring-rose-500 outline-none"
+                class="w-full p-3 bg-gray-700 rounded-lg border border-gray-600 text-gray-200 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none"
               />
             </div>
             <div>
-              <label for="favoritos" class="text-sm font-medium text-slate-700"
+              <label
+                for="favoritos"
+                class="text-sm font-medium text-gray-400 mb-1"
                 >Música, filmes, livros ou jogos favoritos</label
               >
               <textarea
                 id="favoritos"
                 rows="2"
-                class="w-full p-3 bg-slate-100 rounded-lg border border-slate-200 focus:ring-2 focus:ring-rose-500 outline-none"
+                class="w-full p-3 bg-gray-700 rounded-lg border border-gray-600 text-gray-200 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none"
               ></textarea>
             </div>
             <div>
               <label
                 for="temas_conversa"
-                class="text-sm font-medium text-slate-700"
+                class="text-sm font-medium text-gray-400 mb-1"
                 >Temas que gosta de explorar em conversas</label
               >
               <textarea
                 id="temas_conversa"
                 rows="2"
-                class="w-full p-3 bg-slate-100 rounded-lg border border-slate-200 focus:ring-2 focus:ring-rose-500 outline-none"
+                class="w-full p-3 bg-gray-700 rounded-lg border border-gray-600 text-gray-200 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none"
               ></textarea>
             </div>
           </div>
         </div>
 
         <!-- Section 6: Estilo de Vida -->
-        <div class="form-section border-l-4 border-teal-500 pl-4">
-          <h2 class="text-xl font-semibold text-slate-800">
-            🌍 Estilo de Vida
-          </h2>
+        <div
+          class="form-section bg-gray-900/50 p-6 rounded-lg border border-gray-700"
+        >
+          <h2 class="text-xl font-semibold text-white">🌍 Estilo de Vida</h2>
           <div class="space-y-4 mt-4">
             <div>
-              <label for="rotina" class="text-sm font-medium text-slate-700"
+              <label for="rotina" class="text-sm font-medium text-gray-400 mb-1"
                 >Rotina diária (se relevante)</label
               >
               <textarea
                 id="rotina"
                 rows="2"
-                class="w-full p-3 bg-slate-100 rounded-lg border border-slate-200 focus:ring-2 focus:ring-teal-500 outline-none"
+                class="w-full p-3 bg-gray-700 rounded-lg border border-gray-600 text-gray-200 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none"
               ></textarea>
             </div>
             <div>
-              <label for="habitos" class="text-sm font-medium text-slate-700"
+              <label
+                for="habitos"
+                class="text-sm font-medium text-gray-400 mb-1"
                 >Hábitos importantes (ex.: saúde, alimentação, desporto)</label
               >
               <input
                 type="text"
                 id="habitos"
-                class="w-full p-3 bg-slate-100 rounded-lg border border-slate-200 focus:ring-2 focus:ring-teal-500 outline-none"
+                class="w-full p-3 bg-gray-700 rounded-lg border border-gray-600 text-gray-200 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none"
               />
             </div>
             <div>
-              <label for="valores" class="text-sm font-medium text-slate-700"
+              <label
+                for="valores"
+                class="text-sm font-medium text-gray-400 mb-1"
                 >Valores ou causas que considera relevantes</label
               >
               <input
                 type="text"
                 id="valores"
-                class="w-full p-3 bg-slate-100 rounded-lg border border-slate-200 focus:ring-2 focus:ring-teal-500 outline-none"
+                class="w-full p-3 bg-gray-700 rounded-lg border border-gray-600 text-gray-200 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none"
               />
             </div>
           </div>
         </div>
 
         <!-- Section 7: Preferências e Limites -->
-        <div class="form-section border-l-4 border-purple-500 pl-4">
-          <h2 class="text-xl font-semibold text-slate-800">
+        <div
+          class="form-section bg-gray-900/50 p-6 rounded-lg border border-gray-700"
+        >
+          <h2 class="text-xl font-semibold text-white">
             🚫 Preferências e Limites
           </h2>
           <div class="space-y-4 mt-4">
             <div>
-              <label for="linguagem" class="text-sm font-medium text-slate-700"
+              <label
+                for="linguagem"
+                class="text-sm font-medium text-gray-400 mb-1"
                 >Tipo de linguagem que prefere</label
               >
               <input
                 type="text"
                 id="linguagem"
-                class="w-full p-3 bg-slate-100 rounded-lg border border-slate-200 focus:ring-2 focus:ring-purple-500 outline-none"
+                class="w-full p-3 bg-gray-700 rounded-lg border border-gray-600 text-gray-200 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none"
                 placeholder="Ex: Formal, informal, amigável mas profissional"
               />
             </div>
             <div>
               <label
                 for="nao_aprecia"
-                class="text-sm font-medium text-slate-700"
+                class="text-sm font-medium text-gray-400 mb-1"
                 >Coisas que não aprecia em respostas</label
               >
               <textarea
                 id="nao_aprecia"
                 rows="2"
-                class="w-full p-3 bg-slate-100 rounded-lg border border-slate-200 focus:ring-2 focus:ring-purple-500 outline-none"
+                class="w-full p-3 bg-gray-700 rounded-lg border border-gray-600 text-gray-200 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none"
                 placeholder="Ex: ser muito resumido, linguagem complicada, falta de exemplos"
               ></textarea>
             </div>
             <div>
               <label
                 for="limites_pessoais"
-                class="text-sm font-medium text-slate-700"
+                class="text-sm font-medium text-gray-400 mb-1"
                 >Limites pessoais</label
               >
               <textarea
                 id="limites_pessoais"
                 rows="2"
-                class="w-full p-3 bg-slate-100 rounded-lg border border-slate-200 focus:ring-2 focus:ring-purple-500 outline-none"
+                class="w-full p-3 bg-gray-700 rounded-lg border border-gray-600 text-gray-200 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none"
                 placeholder="Ex: não quer conselhos financeiros, não gosta de spoilers de filmes, etc."
               ></textarea>
             </div>
@@ -364,7 +390,7 @@
         <div class="text-center pt-4">
           <button
             id="generate-btn"
-            class="bg-indigo-600 text-white font-bold py-3 px-8 rounded-lg hover:bg-indigo-700 focus:outline-none focus:ring-4 focus:ring-indigo-300 transition-all duration-300 transform hover:scale-105"
+            class="bg-blue-600 text-white font-bold py-3 px-8 rounded-lg hover:bg-blue-700 focus:outline-none focus:ring-4 focus:ring-blue-500/50 transition-all duration-300 transform hover:scale-105"
           >
             Gerar Meu Perfil
           </button>
@@ -374,20 +400,20 @@
       <!-- Result Container -->
       <div
         id="result-container"
-        class="hidden opacity-0 p-6 bg-slate-100 rounded-lg border border-slate-200 space-y-4"
+        class="hidden opacity-0 p-6 bg-gray-700 rounded-lg border border-gray-600 space-y-4"
       >
         <div class="flex justify-between items-center">
-          <h2 class="text-2xl font-bold text-slate-900">Seu Perfil Completo</h2>
+          <h2 class="text-2xl font-bold text-white">Seu Perfil Completo</h2>
           <button
             id="copy-btn"
-            class="bg-slate-200 text-slate-700 font-semibold py-2 px-4 rounded-lg hover:bg-slate-300 focus:outline-none focus:ring-2 focus:ring-slate-400 transition-colors"
+            class="bg-gray-600 text-gray-200 font-semibold py-2 px-4 rounded-lg hover:bg-gray-500 focus:outline-none focus:ring-2 focus:ring-gray-400 transition-colors"
           >
             Copiar
           </button>
         </div>
         <p
           id="result-text"
-          class="text-slate-700 leading-relaxed whitespace-pre-wrap"
+          class="text-gray-300 leading-relaxed whitespace-pre-wrap"
         ></p>
       </div>
     </main>
