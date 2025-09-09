@@ -84,6 +84,28 @@
               placeholder="Ex: Chamo-me João, tenho 35 anos e sou designer em Lisboa. Nos tempos livres, gosto de ler ficção científica e aprender a programar em Python..."
             ></textarea>
           </div>
+          <div>
+            <label
+              for="api-key-input"
+              class="text-sm font-medium text-gray-400 mb-1"
+              >Sua Chave de API da Google AI</label
+            >
+            <input
+              type="password"
+              id="api-key-input"
+              class="w-full p-3 bg-gray-700 rounded-lg border border-gray-600 text-gray-200 focus:ring-2 focus:ring-amber-500 focus:border-amber-500 outline-none"
+              placeholder="Cole a sua chave de API aqui"
+            />
+            <p class="text-xs text-gray-500 mt-1">
+              Para usar esta função, precisa de uma chave.
+              <a
+                href="https://aistudio.google.com/app/apikey"
+                target="_blank"
+                class="text-amber-400 hover:underline"
+                >Obtenha uma chave gratuita no Google AI Studio.</a
+              >
+            </p>
+          </div>
           <div class="text-center">
             <button
               id="ai-prefill-btn"
@@ -488,8 +510,7 @@
 
     <script>
       // --- Gemini API Call Function ---
-      async function callGemini(promptText) {
-        const apiKey = ""; // API Key will be injected by the environment
+      async function callGemini(promptText, apiKey) {
         const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-05-20:generateContent?key=${apiKey}`;
 
         const schema = {
@@ -620,16 +641,28 @@
       // --- Event Listeners ---
       const aiPrefillBtn = document.getElementById("ai-prefill-btn");
       const aiTextInput = document.getElementById("ai-text-input");
+      const apiKeyInput = document.getElementById("api-key-input");
       const aiBtnText = document.getElementById("ai-btn-text");
       const aiBtnSpinner = document.getElementById("ai-btn-spinner");
       const aiError = document.getElementById("ai-error");
 
       aiPrefillBtn.addEventListener("click", async () => {
         const inputText = aiTextInput.value.trim();
+        const userApiKey = apiKeyInput.value.trim();
+
+        if (!userApiKey) {
+          aiError.textContent =
+            "Por favor, introduza a sua Chave de API da Google AI para continuar.";
+          aiError.classList.remove("hidden");
+          apiKeyInput.focus();
+          return;
+        }
+
         if (!inputText) {
           aiError.textContent =
             "Por favor, introduza um texto para ser analisado.";
           aiError.classList.remove("hidden");
+          aiTextInput.focus();
           return;
         }
 
@@ -640,11 +673,12 @@
         aiPrefillBtn.disabled = true;
 
         try {
-          const extractedData = await callGemini(inputText);
+          const extractedData = await callGemini(inputText, userApiKey);
           populateForm(extractedData);
         } catch (error) {
           console.error("Erro ao preencher com IA:", error);
-          aiError.textContent = "Ocorreu um erro. Por favor, tente novamente.";
+          aiError.textContent =
+            "Ocorreu um erro. Verifique a sua chave de API ou tente novamente.";
           aiError.classList.remove("hidden");
         } finally {
           // Restore UI
