@@ -28,6 +28,22 @@
       .fade-in {
         animation: fadeIn 0.5s ease-in-out forwards;
       }
+      .spinner {
+        border: 4px solid rgba(255, 255, 255, 0.3);
+        border-radius: 50%;
+        border-top: 4px solid #fff;
+        width: 20px;
+        height: 20px;
+        animation: spin 1s linear infinite;
+      }
+      @keyframes spin {
+        0% {
+          transform: rotate(0deg);
+        }
+        100% {
+          transform: rotate(360deg);
+        }
+      }
     </style>
   </head>
   <body
@@ -45,6 +61,43 @@
           Responda ao roteiro abaixo para criar um perfil completo. Isso me
           ajudará a personalizar as respostas para você.
         </p>
+      </div>
+
+      <!-- AI Prefill Section -->
+      <div
+        class="form-section bg-gray-900/50 p-6 rounded-lg border border-gray-700"
+      >
+        <h2 class="text-xl font-semibold text-white">
+          ✨ Preenchimento Inteligente
+        </h2>
+        <div class="space-y-4 mt-4">
+          <div>
+            <label
+              for="ai-text-input"
+              class="text-sm font-medium text-gray-400 mb-1"
+              >Cole um texto sobre si aqui</label
+            >
+            <textarea
+              id="ai-text-input"
+              rows="4"
+              class="w-full p-3 bg-gray-700 rounded-lg border border-gray-600 text-gray-200 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none"
+              placeholder="Ex: Chamo-me João, tenho 35 anos e sou designer em Lisboa. Nos tempos livres, gosto de ler ficção científica e aprender a programar em Python..."
+            ></textarea>
+          </div>
+          <div class="text-center">
+            <button
+              id="ai-prefill-btn"
+              class="bg-purple-600 text-white font-bold py-3 px-8 rounded-lg hover:bg-purple-700 focus:outline-none focus:ring-4 focus:ring-purple-500/50 transition-all duration-300 transform hover:scale-105 flex items-center justify-center mx-auto"
+            >
+              <span id="ai-btn-text">Preencher com IA</span>
+              <div id="ai-btn-spinner" class="spinner hidden ml-3"></div>
+            </button>
+          </div>
+          <p
+            id="ai-error"
+            class="text-red-400 text-center text-sm mt-2 hidden"
+          ></p>
+        </div>
       </div>
 
       <!-- Form Sections -->
@@ -434,6 +487,174 @@
     </main>
 
     <script>
+      // --- Gemini API Call Function ---
+      async function callGemini(promptText) {
+        const apiKey = ""; // API Key will be injected by the environment
+        const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-05-20:generateContent?key=${apiKey}`;
+
+        const schema = {
+          type: "OBJECT",
+          properties: {
+            nome: {
+              type: "STRING",
+              description: "O nome ou apelido do usuário.",
+            },
+            idade: { type: "STRING", description: "A idade ou faixa etária." },
+            pais: { type: "STRING", description: "O país e região onde vive." },
+            idiomas: {
+              type: "STRING",
+              description: "Os idiomas de preferência.",
+            },
+            uso_ia: {
+              type: "STRING",
+              description: "O propósito de uso da IA.",
+            },
+            interesses_ia: {
+              type: "STRING",
+              description:
+                "As principais áreas de interesse relacionadas a tecnologia ou outros tópicos.",
+            },
+            limites_ia: {
+              type: "STRING",
+              description: "Temas ou ações a evitar pela IA.",
+            },
+            formacao: {
+              type: "STRING",
+              description: "Formação académica ou técnica.",
+            },
+            exp_tech: {
+              type: "STRING",
+              description: "Nível de experiência em tecnologia.",
+            },
+            aprender: {
+              type: "STRING",
+              description: "Áreas em que deseja aprender mais.",
+            },
+            profissao: { type: "STRING", description: "A profissão atual." },
+            projetos: {
+              type: "STRING",
+              description: "Projetos pessoais ou profissionais.",
+            },
+            ferramentas: {
+              type: "STRING",
+              description: "Ferramentas e tecnologias usadas.",
+            },
+            hobbies: { type: "STRING", description: "Hobbies e passatempos." },
+            favoritos: {
+              type: "STRING",
+              description: "Música, filmes, livros ou jogos favoritos.",
+            },
+            temas_conversa: {
+              type: "STRING",
+              description: "Temas preferidos para conversas.",
+            },
+            rotina: {
+              type: "STRING",
+              description: "Descrição da rotina diária.",
+            },
+            habitos: {
+              type: "STRING",
+              description: "Hábitos importantes (saúde, desporto).",
+            },
+            valores: {
+              type: "STRING",
+              description: "Valores ou causas relevantes.",
+            },
+            linguagem: {
+              type: "STRING",
+              description: "Tipo de linguagem de conversação preferida.",
+            },
+            nao_aprecia: {
+              type: "STRING",
+              description: "O que não aprecia em respostas.",
+            },
+            limites_pessoais: {
+              type: "STRING",
+              description: "Outros limites pessoais.",
+            },
+          },
+        };
+
+        const systemPrompt = `Analise o texto fornecido e extraia as informações para preencher um formulário de perfil. Responda apenas com um objeto JSON válido que siga estritamente o esquema fornecido. Se uma informação não estiver presente no texto, deixe o campo como uma string vazia. O idioma do texto é português.`;
+
+        const payload = {
+          contents: [
+            { parts: [{ text: `Texto a analisar: "${promptText}"` }] },
+          ],
+          systemInstruction: { parts: [{ text: systemPrompt }] },
+          generationConfig: {
+            responseMimeType: "application/json",
+            responseSchema: schema,
+          },
+        };
+
+        const response = await fetch(apiUrl, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(payload),
+        });
+
+        if (!response.ok) {
+          throw new Error(`API Error: ${response.statusText}`);
+        }
+
+        const result = await response.json();
+        const candidate = result.candidates?.[0];
+        if (candidate && candidate.content?.parts?.[0]?.text) {
+          return JSON.parse(candidate.content.parts[0].text);
+        } else {
+          throw new Error("Resposta da API inválida ou vazia.");
+        }
+      }
+
+      // --- Form Population Function ---
+      function populateForm(data) {
+        for (const key in data) {
+          const element = document.getElementById(key);
+          if (element) {
+            element.value = data[key] || ""; // Ensure empty string if value is null/undefined
+          }
+        }
+      }
+
+      // --- Event Listeners ---
+      const aiPrefillBtn = document.getElementById("ai-prefill-btn");
+      const aiTextInput = document.getElementById("ai-text-input");
+      const aiBtnText = document.getElementById("ai-btn-text");
+      const aiBtnSpinner = document.getElementById("ai-btn-spinner");
+      const aiError = document.getElementById("ai-error");
+
+      aiPrefillBtn.addEventListener("click", async () => {
+        const inputText = aiTextInput.value.trim();
+        if (!inputText) {
+          aiError.textContent =
+            "Por favor, introduza um texto para ser analisado.";
+          aiError.classList.remove("hidden");
+          return;
+        }
+
+        // UI feedback
+        aiError.classList.add("hidden");
+        aiBtnText.textContent = "A processar...";
+        aiBtnSpinner.classList.remove("hidden");
+        aiPrefillBtn.disabled = true;
+
+        try {
+          const extractedData = await callGemini(inputText);
+          populateForm(extractedData);
+        } catch (error) {
+          console.error("Erro ao preencher com IA:", error);
+          aiError.textContent = "Ocorreu um erro. Por favor, tente novamente.";
+          aiError.classList.remove("hidden");
+        } finally {
+          // Restore UI
+          aiBtnText.textContent = "Preencher com IA";
+          aiBtnSpinner.classList.add("hidden");
+          aiPrefillBtn.disabled = false;
+        }
+      });
+
+      // --- Existing Logic for Generating Profile Text ---
       const generateBtn = document.getElementById("generate-btn");
       const resultContainer = document.getElementById("result-container");
       const resultText = document.getElementById("result-text");
@@ -443,16 +664,6 @@
 
       generateBtn.addEventListener("click", () => {
         let fullText = "";
-
-        // Helper function to add content to a section if it's not empty
-        const addContent = (section, label, value) => {
-          if (value) {
-            section.content += `${label}: ${value}\n`;
-            section.hasContent = true;
-          }
-        };
-
-        // Define sections
         const sections = {
           dados: {
             title: "🧑‍💻 Dados Pessoais e Gerais",
@@ -487,12 +698,17 @@
           },
         };
 
-        // Populate sections
+        const addContent = (section, label, value) => {
+          if (value) {
+            section.content += `${label}: ${value}\n`;
+            section.hasContent = true;
+          }
+        };
+
         addContent(sections.dados, "Nome", getValue("nome"));
         addContent(sections.dados, "Idade", getValue("idade"));
         addContent(sections.dados, "País/Região", getValue("pais"));
         addContent(sections.dados, "Idioma(s)", getValue("idiomas"));
-
         addContent(sections.objetivos, "Uso pretendido", getValue("uso_ia"));
         addContent(
           sections.objetivos,
@@ -504,7 +720,6 @@
           "Limites para a IA",
           getValue("limites_ia")
         );
-
         addContent(sections.formacao, "Formação", getValue("formacao"));
         addContent(
           sections.formacao,
@@ -516,7 +731,6 @@
           "Quero aprender mais sobre",
           getValue("aprender")
         );
-
         addContent(sections.profissao, "Profissão", getValue("profissao"));
         addContent(sections.profissao, "Projetos atuais", getValue("projetos"));
         addContent(
@@ -524,7 +738,6 @@
           "Ferramentas que uso",
           getValue("ferramentas")
         );
-
         addContent(sections.interesses, "Hobbies", getValue("hobbies"));
         addContent(sections.interesses, "Favoritos", getValue("favoritos"));
         addContent(
@@ -532,11 +745,9 @@
           "Temas para conversar",
           getValue("temas_conversa")
         );
-
         addContent(sections.vida, "Rotina", getValue("rotina"));
         addContent(sections.vida, "Hábitos", getValue("habitos"));
         addContent(sections.vida, "Valores/Causas", getValue("valores"));
-
         addContent(
           sections.preferencias,
           "Linguagem preferida",
@@ -553,7 +764,6 @@
           getValue("limites_pessoais")
         );
 
-        // Build the final text
         let hasAnyContent = false;
         for (const key in sections) {
           const section = sections[key];
@@ -563,7 +773,6 @@
           }
         }
 
-        // Display the result
         if (!hasAnyContent) {
           resultText.textContent =
             "Parece que você não preencheu nenhum campo. Por favor, adicione algumas informações para gerar seu perfil.";
